@@ -172,5 +172,72 @@ Availability is often expressed in terms of **“nines”**. The more nines, the
 
 ---
 
+# 🏗️ CAP Theorem
 
+<img width="460" height="413" alt="CAP Theorem" src="https://github.com/user-attachments/assets/f603d3d7-bdfd-4a56-9cf4-c5724b41f725" />
+
+### 📌 Note
+
+It is **impossible** for a distributed data store to **simultaneously provide all three guarantees**:
+
+* **Consistency (C):** Every read receives the most recent write or an error.
+* **Availability (A):** Every request receives a non-error response (but not guaranteed to be the latest data).
+* **Partition Tolerance (P):** The system continues to operate even if network failures cause delays or dropped messages.
+
+---
+
+## ⚖️ The CAP Trade-Off (Pick Any 2)
+
+1. **CP (Consistency + Partition Tolerance)**
+
+   * Prioritizes data correctness over availability.
+   * During partitions, some requests may be **rejected** to maintain consistency.
+   * ✅ Example: HBase, MongoDB (in certain configurations).
+
+2. **AP (Availability + Partition Tolerance)**
+
+   * Always responds, even during partitions.
+   * May serve **stale or different data** from different nodes.
+   * ✅ Example: DynamoDB, Cassandra.
+
+3. **CA (Consistency + Availability)**
+
+   * Achievable only in **the absence of partitions**.
+   * Since partitions are inevitable, **CA alone is impractical** in real distributed systems.
+
+---
+
+## 🔄 Consistency Models
+
+1. **Eventual Consistency**
+
+   * Updates propagate **eventually**, not instantly.
+   * ✅ Example: DNS, Content Delivery Networks (CDNs).
+
+2. **Strong Consistency**
+
+   * Once a write is confirmed, **all subsequent reads** return the latest value.
+   * ✅ Example: Banking systems, Inventory management.
+
+3. **Tunable Consistency**
+
+   * Flexibility to adjust consistency level **per operation**.
+   * ✅ Example: E-commerce (orders → strong, recommendations → eventual).
+
+4. **Quorum-Based Approaches**
+
+   * Uses **voting among nodes** to reach consistency + fault tolerance.
+   * ✅ Example: Consensus algorithms like **Paxos** and **Raft**.
+
+---
+
+## 🎯 Key Takeaway
+
+Distributed systems **cannot have Consistency, Availability, and Partition Tolerance all at once**. Instead, they balance trade-offs depending on use cases:
+
+* Financial apps → **CP**
+* Social networks → **AP**
+* Theoretical ideal (but impractical) → **CA**
+
+---
 
