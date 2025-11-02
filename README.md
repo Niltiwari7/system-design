@@ -186,7 +186,7 @@ It is **impossible** for a distributed data store to **simultaneously provide al
 
 ---
 
-## ⚖️ The CAP Trade-Off (Pick Any 2)
+## ⚖️ The CAP Trade-Off 
 
 1. **CP (Consistency + Partition Tolerance)**
 
