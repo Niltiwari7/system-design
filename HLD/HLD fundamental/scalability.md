@@ -1,7 +1,5 @@
 # Scalability
 
-Let's learn scalability the way you need it for an SDE 2 interview: simple explanation → diagram → short notes → interview-ready answer.
-
 ## 1. What is scalability?
 
 Scalability is a system's ability to handle increasing workload by adding resources while maintaining acceptable performance.
