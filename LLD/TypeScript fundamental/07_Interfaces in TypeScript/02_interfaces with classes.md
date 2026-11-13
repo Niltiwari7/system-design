@@ -91,3 +91,51 @@ Expected output:
 Sending Email to nilesh@gmail.com: Hello!
 Sending SMS to 9876543210: Hello!
 Sending WhatsApp to 9876543210: Hello!
+
+```ts
+// Task 1: Create Notification Interface
+interface Notification {
+    send(message: string, recipient: string): void;
+}
+
+// Task 2: Create three classes implementing Notification
+
+class EmailNotification implements Notification {
+    send(message: string, recipient: string): void {
+        console.log(`Sending Email to ${recipient}: ${message}`);
+    }
+}
+
+class SMSNotification implements Notification {
+    send(message: string, recipient: string): void {
+        console.log(`Sending SMS to ${recipient}: ${message}`);
+    }
+}
+
+class WhatsAppNotification implements Notification {
+    send(message: string, recipient: string): void {
+        console.log(`Sending WhatsApp to ${recipient}: ${message}`);
+    }
+}
+
+// Task 3: Create a common function
+function sendNotification(
+    notification: Notification,
+    message: string,
+    recipient: string
+): void {
+    notification.send(message, recipient);
+}
+
+// Task 4: Execute all three notification types
+
+const emailNotification = new EmailNotification();
+const smsNotification = new SMSNotification();
+const whatsAppNotification = new WhatsAppNotification();
+
+sendNotification(emailNotification, "Hello!", "nilesh@gmail.com");
+
+sendNotification(smsNotification, "Hello!", "9876543210");
+
+sendNotification(whatsAppNotification, "Hello!", "9876543210");
+```
