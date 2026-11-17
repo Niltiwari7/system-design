@@ -290,3 +290,63 @@ phone.takePhoto();
 phone.makeCall();
 ```
 
+#### 2.5 Hybrid inheritance
+Hybrid inheritance combines two or more inheritance structures.
+![alt text](image-5.png)
+Here we have:
+- Hierarchical inheritance: Person → Employee and Person → Customer.
+- Multilevel inheritance: Person → Employee → Developer.
+
+### 3. The most important inheritance concepts for SDE-2
+#### 3.1 The "is-a" relationship
+This is the foundation of inheritance.
+For example:
+- A car is a Vehicle.
+- A dog is an animal.
+- A developer is an employee.
+- A manager is an employee.
+
+These are valid relationships.
+But consider:
+- A Car is an Engine.
+- A Laptop is a Processor.
+- A House is a Room.
+These relationships do not represent inheritance.
+
+Why?
+Because a car has an engine. A laptop has a processor. A house has rooms.
+There are examples of composition or aggregation, not inheritance.
+
+#### 3.2 Method overriding
+Method overriding happens when a child class provides its own implementation of a method defined in its parent.
+Think about a vehicle.
+Different vehicles start differently.
+- Car starts using an engine.
+- ElectricCar starts using an electric motor.
+- Bike stars using its engine.
+
+We can represent this with methodoverirding
+
+```ts
+class Vehicle {
+  start() : void {
+    console.log("Vehicle is starting");
+  }
+}
+
+class Car extends Vehicle {
+  override start(): void {
+    console.log("Car engine is starting");
+  }
+}
+
+class BBike extends Vehicle {
+  override start(): void {
+    console.log("Bike engine is starting");
+  }
+}
+```
+
+Notice the `override` keyword.
+Typescript supports it to explicitly indicate that you are overriding a parent method.
+
