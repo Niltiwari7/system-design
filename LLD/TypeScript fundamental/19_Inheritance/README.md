@@ -350,3 +350,182 @@ class BBike extends Vehicle {
 Notice the `override` keyword.
 Typescript supports it to explicitly indicate that you are overriding a parent method.
 
+#### 3.3 Runtime polymorphism
+Polymorphism: One interface , multiple possible implementation.
+Consider:
+```ts
+class Animal {
+  sound(): void {
+    console.log("Animal makes a sound")
+  }
+}
+
+class Dog extends Animal {
+  override sound() : void {
+    console.log("Dog barks")
+  }
+}
+
+class Cat extends Animal {
+  override sound(): void {
+    console.log("Cat meows")
+  }
+}
+```
+Now lets create a common function:
+```ts
+function makeAnimalSound(animal: Animal): void {
+  animal.sound()
+}
+```
+
+Call it:
+```ts
+const dog = new Dog()
+const cat = new Cat()
+makeAnimalSound(dog);
+makeAnimalSound(cat);
+```
+
+Look closely at this line
+```ts
+function makeAnimalSound(animal : Animal): void {
+
+}
+```
+The function accept an Animal
+But we passed:
+- Dog
+- Cat
+Both are acceptable because both extend Animal.
+Now comes the interesting part.
+Although the function accepts an Animal reference, the actual method executed depends on the runtime object.
+
+![alt text](image-6.png)
+This is runtime polymorphism, also known as dynamic dispatch.
+
+**Compile-time versus runtime object**
+This distinction is essential.
+```ts
+const animal : Animal = new Dog();
+animal.sound()
+```
+
+Here:
+|Concept |	Value |
+|---|---|
+Declared/reference type |	Animal
+Actual runtime object	| Dog
+Executed method	| Dog.sound()
+
+The declared type determines which operations TypeScript allows you to call.
+
+### 4. Inheritance versus Composition
+#### 4.1 What is composition?
+Composition means building a class by combining other objects that provide required functionality.
+
+Let's revisit our Laptop and process example.
+A Laptop has a Processor.
+It is not a Processor.
+Therefore, composition makes sense.
+```ts
+class Processor {
+  start() : void {
+    console.log("Processor started");
+  }
+}
+
+class Laptop {
+  constructor(private processor : Processor) {}
+
+  boot(): void {
+    this.processor.start();
+    console.log("Laptop booted");
+  }
+}
+
+const processor = new Processor();
+const laptop = new Laptop(processor);
+laptop.boot();
+```
+
+Visual:
+![alt text](image-7.png)
+
+#### 4.2 Compare inheritance and composition
+Consider a `Car`.
+##### Inheritance approach
+```ts
+class Vehicle {
+   start(): void {
+    console.log("Vehicle started")
+   }
+}
+
+class Car extends Vehicle {}
+```
+A Car is a Vehicle.
+
+##### Composition approach
+```ts
+class Engine {
+  start(): void {
+    console.log("Engine started");
+  }
+}
+
+class Car {
+  constructor(private engine: Engine){}
+  start() : void {
+    this.engine.start();
+  }
+}
+```
+A Car has an Engine.
+
+### 5. The Liskov substitution Principle 
+LSP is the L in solid.
+it says an object of a child class should be usable when ever an object of its parent class is expected, without breaking the correctness of the program.
+
+Let's understand with a classic example:
+#### 5.1 A bad inheritance design
+Suppose we create a `Bird` class.
+
+```ts
+class Bird {
+  fly(): void {
+    console.log("Bird is flying");
+  }
+}
+
+class Sparrow extends Bird {}
+
+class Penguin extends Bird {
+  override fly(): void {
+    throw new Error("Penguins cannot fly");
+  }
+}
+```
+
+What's wrong?
+
+A Penguin is a Bird, but it cannot perform the behavior promised by the parent class.
+
+
+#### 5.2 A better design
+Separate the common Bird behavior from flying behavior.
+```ts
+abstract class Bird {
+  abstract eat(): void;
+}
+interface Flyable {
+  fly(): void;
+}
+
+class Sparrow extends Bird implements {
+  eat(): void {
+    console.log("Sparrow")
+  }
+}
+```
+
