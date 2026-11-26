@@ -524,8 +524,67 @@ interface Flyable {
 
 class Sparrow extends Bird implements {
   eat(): void {
-    console.log("Sparrow")
+    console.log("Sparrow eating")
+  }
+
+  fly(): void {
+    console.log("Sparrow flying")
+  }
+}
+
+class Penguin extends Bird {
+  eat(): void {
+    console.log("Penguin eating")
   }
 }
 ```
 
+Now the design is more accurate:
+```
+            Bird
+             |
+       +-----+------+
+       |            |
+    Sparrow      Penguin
+       |
+    Flyable
+```
+
+Interview Question:
+
+1. What is a inheritance, and why do we need it?
+Inheritance is a one of the pillar of the oops. It inherit the parent class. 
+let take a example as a children of our parent that child inherit their behavior.
+we need it for the reusability of the code.
+Maintainability of the code
+
+2. Does a child class inherit the parent constructor?
+No. Constructor are not inherited as ordinary methods. However, the child constructor can invoke the parent constructor using `super` to initialize inherited state.
+
+3. Can we override a private method?
+A TypeScript `private` method cannot be directly accessed or overridden as an accessible parent method by a subclass. A child can declare a separate method with the same name in some circumstances, but it does not override the parents private member.
+
+Cheat sheet:
+
+|Concept |	Remember |
+|---|---|
+|Inheritance|	Reuse and specialize parent behavior
+|IS-A	| Genuine subtype relationship
+|HAS-A |	Composition/aggregation relationship
+|extends |	Inherit from a class or interface
+| implements |	Satisfy an interface contract
+| super() |	Invoke parent constructor
+|super.method() |	Invoke parent implementation
+|protected|	Accessible in subclasses
+|private |	Restricted to declaring class
+| override |	Explicitly mark method overriding
+|Polymorphism |	One abstraction, multiple implementations
+|Dynamic dispatch |	Runtime implementation selection
+|Abstract class |	Shared implementation + abstract contract
+|Interface |	Contract and structural typing
+|Virtual function |	C++ runtime dispatch mechanism
+| Pure virtual |	C++ abstract method declaration
+|Diamond problem |	Ambiguous/shared base in multiple inheritance
+| Virtual inheritance|	Shares a common virtual base subobject in C++
+| LSP	| Child must preserve parent behavioral contract
+|Composition |	Build behavior by combining objects
